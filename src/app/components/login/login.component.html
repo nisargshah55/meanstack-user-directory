@@ -1,0 +1,30 @@
+<!-- Title group  -->
+<mat-toolbar>
+    <span>Login</span>
+</mat-toolbar>
+
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- Form -->
+        <form [formGroup]="loginForm" novalidate class="example-form">
+
+            <!-- Email -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Password" formControlName="pass_word" type="password">
+            </mat-form-field>
+
+        </form>
+
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="login()" color="primary">LOGIN</button>
+    </mat-card-actions>
+    <mat-label>Haven't registered? 
+        <button mat-raised-button [routerLink]="'/register'" color="primary">REGISTER</button>
+    </mat-label>
+</mat-card>

@@ -1,0 +1,45 @@
+<!-- Title group  -->
+<mat-toolbar>
+    <span>Registration</span>
+</mat-toolbar>
+
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- Form -->
+        <form [formGroup]="registerForm" novalidate class="example-form">
+
+            <!-- First Name -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="First Name" formControlName="first_name">
+            </mat-form-field>
+
+            <!-- Last Name -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Last Name" formControlName="last_name">
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Password" formControlName="pass_word" type="password">
+            </mat-form-field>
+
+            <!-- Date of birth -->
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="date_of_birth">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="register()" color="primary">REGISTER</button>
+    </mat-card-actions>
+    <mat-label>Already Registered? 
+        <button mat-raised-button [routerLink]="'/login'" color="primary">LOGIN</button>
+    </mat-label> 
+</mat-card>
