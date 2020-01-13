@@ -3,20 +3,25 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema
 let User = new Schema({
-  first_name: {
+  firstName: {
     type: String
   },
-  last_name: {
+  lastName: {
     type: String
   },
   email: {
     type: String
   },
-  pass_word: {
+  password: {
     type: String
   },
-  date_of_birth: {
-    type: Date
+  dob: {
+    type: Date,
+    default: Date.now()
+  },
+  isAdmin: {
+    type: Boolean,
+    default: 0
   }
 }, {
   collection: 'users'

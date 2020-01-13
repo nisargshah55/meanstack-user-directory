@@ -3,7 +3,8 @@ let express = require('express'),
   mongoose = require('mongoose'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
-  dataBaseConfig = require('./database/db');
+  dataBaseConfig = require('./database/db'),
+  createError = require('http-errors');
 
 // Connecting mongoDB
 mongoose.Promise = global.Promise;
@@ -18,7 +19,7 @@ mongoose.connect(dataBaseConfig.db, {
 )
 
 // Set up express js port
-const userRoute = require('../backend/routes/user.route')
+const userRoute = require('./routes/user.route');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -31,7 +32,7 @@ app.use('/api', userRoute)
 
 // Create port
 const port = process.env.PORT || 4000;
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log('Connected to port ' + port)
 })
 

@@ -10,12 +10,12 @@
 
             <!-- First Name -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="First Name" formControlName="first_name">
+                <input matInput placeholder="First Name" formControlName="firstName">
             </mat-form-field>
 
             <!-- Last Name -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Last Name" formControlName="last_name">
+                <input matInput placeholder="Last Name" formControlName="lastName">
             </mat-form-field>
 
             <!-- Email -->
@@ -25,12 +25,12 @@
 
             <!-- Password -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password" formControlName="pass_word" type="password">
+                <input matInput placeholder="Password" formControlName="password" type="password">
             </mat-form-field>
 
             <!-- Date of birth -->
             <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="date_of_birth">
+                <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
