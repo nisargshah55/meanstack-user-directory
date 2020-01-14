@@ -72,29 +72,44 @@
 
                 <!-- First Name -->
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="First Name" formControlName="firstName">
+                    <input matInput placeholder="First Name" formControlName="firstName" required>
+                    <mat-error>
+                        You must provide a first name
+                      </mat-error>
                 </mat-form-field>
 
                 <!-- Last Name -->
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Last Name" formControlName="lastName">
+                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    <mat-error>
+                        You must provide a last name
+                      </mat-error>
                 </mat-form-field>
 
                 <!-- Email -->
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Email" formControlName="email">
+                    <input matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+                    <mat-error>
+                        You must provide a valid email address
+                      </mat-error>
                 </mat-form-field>
 
                 <!-- Password -->
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Password" formControlName="password" type="password">
+                    <input matInput placeholder="Password" formControlName="password" type="password" required>
+                    <mat-error>
+                        You must provide a password
+                      </mat-error>
                 </mat-form-field>
 
                 <!-- Date of birth -->
                 <mat-form-field class="example-full-width">
-                    <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob">
+                    <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>
+                        You must provide a date of birth
+                      </mat-error>
                 </mat-form-field>
             </form>
         </mat-card-content>

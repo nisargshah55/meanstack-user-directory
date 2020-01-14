@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/shared/User.model';
 import { MatTableDataSource } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
 import { isUndefined } from 'util';
 
@@ -21,11 +21,11 @@ export class UserProfileComponent implements OnInit {
 
   constructor(private router: Router, private fb: FormBuilder, private service: ApiService) {
     this.profileForm = this.fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      dob: ''
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      dob: ['', Validators.required],
     })
 
     if (this.userData !== undefined) {

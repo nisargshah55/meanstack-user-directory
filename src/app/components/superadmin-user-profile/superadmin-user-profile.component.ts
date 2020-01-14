@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { UserModel } from 'src/app/shared/User.model';
 import { Router } from '@angular/router';
@@ -19,13 +19,13 @@ export class SuperadminUserProfileComponent implements OnInit {
   editFlag = false;
   editedUser = [];
 
-  constructor(private router: Router, private fb: FormBuilder, private service: ApiService) { 
+  constructor(private router: Router, private fb: FormBuilder, private service: ApiService) {
     this.superAdminForm = this.fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      dob: ''
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      dob: ['', Validators.required],
     })
 
     if (this.userData !== undefined) {
@@ -50,6 +50,9 @@ export class SuperadminUserProfileComponent implements OnInit {
   getAllUsers() {
     this.service.getAllUsers().subscribe(userList => {
       this.dataSource = userList;
+      this.superAdminForm.reset();
+      this.editFlag = false;
+      this.editedUser = [];
     })
   }
 
@@ -62,15 +65,31 @@ export class SuperadminUserProfileComponent implements OnInit {
   }
 
   updateUserProfile(id) {
-    console.log(id);
-    console.log(this.superAdminForm.value);
-    if (window.confirm('Are you sure you want to update?')) {
-      this.service.updateUserProfile(id, this.superAdminForm.value).subscribe(updatedData => {
-        this.editFlag = false;
-        this.editedUser = [];
-        this.getAllUsers();
-      });
+    if (this.superAdminForm.valid) {
+      console.log(id);
+      console.log(this.superAdminForm.value);
+      if (id !== undefined) {
+        if (window.confirm('Are you sure you want to update?')) {
+          this.service.updateUserProfile(id, this.superAdminForm.value).subscribe(updatedData => {
+            this.editFlag = false;
+            this.editedUser = [];
+            this.getAllUsers();
+          });
+        }
+      } else if (id === undefined) {
+        if (window.confirm('Are you sure you want to add user?')) {
+          this.service.register(this.superAdminForm.value).subscribe(updatedData => {
+            this.editFlag = false;
+            this.editedUser = [];
+            this.getAllUsers();
+          });
+        }
+      }
     }
+  }
+
+  addUser() {
+    this.editFlag = true;
   }
 
 }
