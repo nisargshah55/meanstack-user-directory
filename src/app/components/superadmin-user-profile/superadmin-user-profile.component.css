@@ -1,7 +1,7 @@
-.mat-raised-button {
-    margin-left: 5px;
- }
-
  .fill-space {
     flex: 1 1 auto;
 } 
+
+table.mat-table {
+    width: 100%!important;
+}

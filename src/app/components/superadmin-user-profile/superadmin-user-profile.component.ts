@@ -15,7 +15,7 @@ export class SuperadminUserProfileComponent implements OnInit {
   superAdminForm: FormGroup;
   userData: any = [];
   dataSource: MatTableDataSource<UserModel>;
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'password', 'dob', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'password', 'dob', 'edit', 'delete'];
   editFlag = false;
   editedUser = [];
 
