@@ -10,16 +10,23 @@
 
             <!-- Email -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" formControlName="email">
+                <input matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+                <mat-error>
+                    You must provide a valid email address
+                  </mat-error> 
             </mat-form-field>
 
             <!-- Password -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password" formControlName="password" type="password">
+                <input matInput placeholder="Password" formControlName="password" type="password" required>
+                <mat-error>
+                    You must provide a password
+                  </mat-error>
             </mat-form-field>
 
         </form>
-
+        <br>
+        <mat-error *ngIf="loginValidator === false">Incorrect email address or password</mat-error>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button (click)="login()" color="primary">LOGIN</button>

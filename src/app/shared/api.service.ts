@@ -47,10 +47,69 @@ export class ApiService {
             .pipe(
                 map(res => {
                     return res;
-                    catchError(this.errorMgmt)
-                })
-                
+                }),
+                catchError(this.errorMgmt)
             )
     }
+
+    getAllUsers(): Observable<any> {
+        let API_URL = `${this.endpoint}/getAllUsers`;
+        return this.http.get(API_URL)
+            .pipe(
+                map(res => {
+                    return res;
+                }),
+                catchError(this.errorMgmt)
+            )
+    }
+
+    deleteUser(userId: UserModel): Observable<any> {
+        let API_URL = `${this.endpoint}/deleteUser/${userId}`;
+        return this.http.delete(API_URL)
+            .pipe(
+                map(res => {
+                    return res;
+                }),
+                catchError(this.errorMgmt)
+            )
+    }
+
+    // Get User By Id
+    getUserById(id): Observable<any> {
+        let API_URL = `${this.endpoint}/getUserById/${id}`;
+        return this.http.get(API_URL, { headers: this.headers }).pipe(
+            map((res: Response) => {
+                return res || {}
+            }),
+            catchError(this.errorMgmt)
+        )
+    }
+
+    // Update student
+    updateUserProfile(id, data: UserModel): Observable<any> {
+        let API_URL = `${this.endpoint}/updateUserProfile/${id}`;
+        return this.http.put(API_URL, data, { headers: this.headers }).pipe(
+            map((res: Response) => {
+                return res || {}
+            }),
+            catchError(this.errorMgmt)
+        )
+    }
+
+
+    onFormValuesChanged(formErrors, loginForm) {
+        for (const field in formErrors) {
+          if (!formErrors.hasOwnProperty(field)) {
+            continue;
+          }
+          // Clear previous errors
+          formErrors[field] = {};
+          // Get the control
+          const control = loginForm.get(field);
+          if (control && control.dirty && !control.valid) {
+            formErrors[field] = control.errors;
+          }
+        }
+      }
 
 }

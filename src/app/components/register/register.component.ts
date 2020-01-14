@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
 import { UserModel } from 'src/app/shared/User.model';
 import { Router } from '@angular/router';
@@ -13,26 +13,46 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   user: UserModel;
+  formErrors: any;
 
   constructor(private fb: FormBuilder, private service: ApiService, private router: Router) {
     this.registerForm = this.fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      dob: ''
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      dob: ['', Validators.required],
     })
-   }
 
-  ngOnInit() {
+    this.formErrors = {
+      firstName: {},
+      lastName: {},
+      email: {},
+      password: {},
+      dob: {}
+    };
   }
 
-  register() {
-    this.user = this.registerForm.value;
-
-    this.service.register(this.user).subscribe(() => {
-      this.router.navigateByUrl('login');
+  ngOnInit() {
+    this.registerForm.valueChanges.subscribe(() => {
+      this.service.onFormValuesChanged(this.formErrors, this.registerForm);
     });
+  }
+
+  /* Get errors */
+  public handleError = (controlName: string, errorName: string) => {
+    return this.registerForm.controls[controlName].hasError(errorName);
+  }
+
+
+  register() {
+    if (this.registerForm.valid) {
+      this.user = this.registerForm.value;
+
+      this.service.register(this.user).subscribe(() => {
+        this.router.navigateByUrl('login');
+      });
+    }
   }
 
 }

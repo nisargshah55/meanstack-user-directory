@@ -11,13 +11,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './shared/api.service';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { SuperadminUserProfileComponent } from './components/superadmin-user-profile/superadmin-user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SuperadminUserProfileComponent
   ],
   imports: [
     BrowserModule,

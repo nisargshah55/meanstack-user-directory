@@ -1,67 +1,68 @@
-<ng-container *ngIf="userData.isAdmin === true">
-    <mat-toolbar>
-        <span>User List</span>
-    </mat-toolbar>
+<ng-container *ngIf="editFlag === false">
+<mat-toolbar>
+    <span class="fill-space">
+        User Profile
+    </span>
+    <span [routerLink]="['/login']" style="cursor:pointer;">
+        Logout
+    </span>
+</mat-toolbar>
 
-    <mat-card class="my-card">
-        <mat-card-content>
-            <!-- Form -->
-            <form [formGroup]="profileForm" novalidate class="example-form">
-                <p *ngIf="userData.length <= 0" class="no-data">There is no user added yet!</p>
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- Form -->
+        <form>
 
-                <div class="container" *ngIf="userData.length > 0">
-                    <div class="mat-elevation-z8">
-                        <table mat-table [dataSource]="dataSource">
-                            <ng-container matColumnDef="_id">
-                                <th mat-header-cell *matHeaderCellDef> User ID </th>
-                                <td mat-cell *matCellDef="let element"> {{element._id}} </td>
-                            </ng-container>
+            <!-- First Name -->
+            <div>
+                <mat-label class="mat-body-strong">First Name: </mat-label>
+                <mat-label>{{userData?.firstName}}</mat-label>
+            </div>
+            <br />
 
-                            <ng-container matColumnDef="firstName">
-                                <th mat-header-cell *matHeaderCellDef> First Name </th>
-                                <td mat-cell *matCellDef="let element"> {{element.firstName} </td>
-                  </ng-container>
-            
-                  <ng-container matColumnDef="lastName">
-                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-                            </ng-container>
+            <!-- Last Name -->
+            <div>
+                <mat-label class="mat-body-strong">Last Name: </mat-label>
+                <mat-label>{{userData?.lastName}}</mat-label>
+            </div>
+            <br />
 
-                            <ng-container matColumnDef="email">
-                                <th mat-header-cell *matHeaderCellDef> Email </th>
-                                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                            </ng-container>
+            <!-- Email -->
+            <div>
+                <mat-label class="mat-body-strong">Email: </mat-label>
+                <mat-label>{{userData?.email}}</mat-label>
+            </div>
+            <br />
 
-                            <ng-container matColumnDef="email">
-                                <th mat-header-cell *matHeaderCellDef> Email </th>
-                                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                            </ng-container>
+            <!-- Password -->
+            <div>
+                <mat-label class="mat-body-strong">Password: </mat-label>
+                <mat-label>{{userData?.password}}</mat-label>
+            </div>
+            <br />
 
-                            <ng-container matColumnDef="password">
-                                <th mat-header-cell *matHeaderCellDef> Password </th>
-                                <td mat-cell *matCellDef="let element"> {{element.password}} </td>
-                            </ng-container>
+            <!-- Date of birth -->
+            <div>
+                <mat-label class="mat-body-strong">Date of birth: </mat-label>
+                <mat-label>{{userData?.dob | date}}</mat-label>
+            </div>
+            <br />
 
-                            <ng-container matColumnDef="dob">
-                                <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
-                                <td mat-cell *matCellDef="let element"> {{element.dob}} </td>
-                            </ng-container>
-
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-
-                    </div>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+            <button mat-raised-button color="primary" (click)="editUserProfile(userData?._id)">Edit</button>
+        </form>
+    </mat-card-content>
+</mat-card>
 </ng-container>
 
-<ng-container *ngIf="userData.isAdmin === false">
+<ng-container *ngIf="editFlag === true">
     <!-- Title group  -->
     <mat-toolbar>
-        <span>User Profile</span>
+        <span class="fill-space">
+            Edit User Profile
+        </span>
+        <span [routerLink]="['/login']" style="cursor:pointer;">
+            Logout
+        </span>
     </mat-toolbar>
 
     <mat-card class="my-card">
@@ -70,40 +71,35 @@
             <form [formGroup]="profileForm" novalidate class="example-form">
 
                 <!-- First Name -->
-                <div>
-                    <mat-label class="mat-body-strong">First Name: </mat-label>
-                    <mat-label>{{userData?.firstName}}</mat-label>
-                </div>
-                <br />
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="First Name" formControlName="firstName">
+                </mat-form-field>
 
                 <!-- Last Name -->
-                <div>
-                    <mat-label class="mat-body-strong">Last Name: </mat-label>
-                    <mat-label>{{userData?.lastName}}</mat-label>
-                </div>
-                <br />
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Last Name" formControlName="lastName">
+                </mat-form-field>
 
                 <!-- Email -->
-                <div>
-                    <mat-label class="mat-body-strong">Email: </mat-label>
-                    <mat-label>{{userData?.email}}</mat-label>
-                </div>
-                <br />
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
 
                 <!-- Password -->
-                <div>
-                    <mat-label class="mat-body-strong">Password: </mat-label>
-                    <mat-label>{{userData?.password}}</mat-label>
-                </div>
-                <br />
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Password" formControlName="password" type="password">
+                </mat-form-field>
 
                 <!-- Date of birth -->
-                <div>
-                    <mat-label class="mat-body-strong">Date of birth: </mat-label>
-                    <mat-label>{{userData?.dob | date}}</mat-label>
-                </div>
-                <br />
+                <mat-form-field class="example-full-width">
+                    <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
             </form>
         </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button (click)="updateUserProfile(editedUser._id)" color="primary">Update</button>
+        </mat-card-actions>
     </mat-card>
 </ng-container>
