@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './shared/api.service';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SuperadminUserProfileComponent } from './components/superadmin-user-profile/superadmin-user-profile.component';
+import { LoginGuard } from './login.guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SuperadminUserProfileComponent } from './components/superadmin-user-pro
     FormsModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    LoginGuard,
   ],
   bootstrap: [AppComponent]
 })

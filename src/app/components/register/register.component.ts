@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user: UserModel;
   formErrors: any;
+  regValidator: boolean;
 
   constructor(private fb: FormBuilder, private service: ApiService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -48,9 +49,13 @@ export class RegisterComponent implements OnInit {
   register() {
     if (this.registerForm.valid) {
       this.user = this.registerForm.value;
+      this.regValidator = false;
+      this.service.register(this.user).subscribe(data => {
+        if (data === 'email exists') {
 
-      this.service.register(this.user).subscribe(() => {
+        } else {
         this.router.navigateByUrl('login');
+        }
       });
     }
   }

@@ -5,6 +5,8 @@ let express = require('express'),
   bodyParser = require('body-parser'),
   dataBaseConfig = require('./database/db'),
   createError = require('http-errors');
+  session = require('express-session'),
+  MongoDBStore = require('connect-mongodb-session')(session)
 
 // Connecting mongoDB
 mongoose.Promise = global.Promise;
@@ -18,6 +20,11 @@ mongoose.connect(dataBaseConfig.db, {
   }
 )
 
+let store = new MongoDBStore({
+  uri: "mongodb://localhost:27017/user_directory",
+  collection: 'login_session'
+});
+
 // Set up express js port
 const userRoute = require('./routes/user.route');
 const app = express();
@@ -28,7 +35,19 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'dist/meanstack-user-directory')));
 app.use('/', express.static(path.join(__dirname, 'dist/meanstack-user-directory')));
-app.use('/api', userRoute)
+app.use(
+  session({
+      secret: 'test_sess_secret_key',
+      resave: true,
+      saveUninitialized: true,
+      store: store
+  })
+);
+app.use('/api', userRoute);
+
+store.on('error', function(req, res) {
+  console.log("error");
+});
 
 // Create port
 const port = process.env.PORT || 4000;

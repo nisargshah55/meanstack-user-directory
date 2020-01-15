@@ -26,7 +26,7 @@
 
             <!-- Email -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+                <input matInput placeholder="Email" formControlName="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
                 <mat-error>
                     You must provide a valid email address
                   </mat-error>
@@ -50,6 +50,8 @@
                   </mat-error>
             </mat-form-field>
         </form>
+        <br>
+        <mat-error *ngIf="regValidator === false">User with this email address already exists</mat-error>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button (click)="register()" color="primary">REGISTER</button>

@@ -28,7 +28,7 @@ export class UserProfileComponent implements OnInit {
       dob: ['', Validators.required],
     })
 
-    if (this.userData !== undefined) {
+    if(this.router.getCurrentNavigation().extras.state !== undefined) {
       this.userData = this.router.getCurrentNavigation().extras.state.userData;
     }
   }
@@ -56,5 +56,13 @@ export class UserProfileComponent implements OnInit {
         })
       });
     }
+  }
+
+  logout() {
+    this.service.logout().subscribe(data => {
+      if(data === 'successful') {
+        this.router.navigateByUrl('logout');
+      }
+    });
   }
 }

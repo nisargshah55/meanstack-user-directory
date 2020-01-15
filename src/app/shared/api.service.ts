@@ -31,17 +31,18 @@ export class ApiService {
 
     // Add user
     register(data: UserModel): Observable<any> {
-        console.log(data);
         let API_URL = `${this.endpoint}/register`;
-        return this.http.post(API_URL, data)
+        return this.http.post(API_URL, data, {responseType: 'text' as 'json'})
             .pipe(
+                map(res => {
+                    return res;
+                }),
                 catchError(this.errorMgmt)
             )
     }
 
     // Check User
     login(data: UserModel): Observable<any> {
-        console.log(data);
         let API_URL = `${this.endpoint}/login`;
         return this.http.post(API_URL, data)
             .pipe(
@@ -50,6 +51,28 @@ export class ApiService {
                 }),
                 catchError(this.errorMgmt)
             )
+    }
+
+    logout(): Observable<any>{
+        let API_URL = `${this.endpoint}/logout`;
+        return this.http.get(API_URL, {responseType: 'text'})
+            .pipe(
+                map(res => {
+                    return res;
+                }),
+                catchError(this.errorMgmt)
+            )
+    }
+
+    isLoggedIn():Observable<any>  {
+        let API_URL = `${this.endpoint}/isLoggedIn`;
+        return this.http.get(API_URL)
+            .pipe(map(
+               res => {
+                    return res;
+                },
+                catchError(this.errorMgmt)
+            ))
     }
 
     getAllUsers(): Observable<any> {

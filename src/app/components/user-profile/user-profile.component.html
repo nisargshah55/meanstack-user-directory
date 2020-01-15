@@ -3,7 +3,7 @@
     <span class="fill-space">
         User Profile
     </span>
-    <span [routerLink]="['/login']" style="cursor:pointer;">
+    <span (click)=logout() style="cursor:pointer;">
         Logout
     </span>
 </mat-toolbar>
@@ -60,7 +60,7 @@
         <span class="fill-space">
             Edit User Profile
         </span>
-        <span [routerLink]="['/login']" style="cursor:pointer;">
+        <span (click)=logout() style="cursor:pointer;">
             Logout
         </span>
     </mat-toolbar>

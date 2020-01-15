@@ -4,23 +4,29 @@ const userRoute = express.Router();
 
 // User model
 let User = require('../model/User');
+let sessionData;
 
 // Add User
 userRoute.route('/register').post((req, res) => {
-  console.log(req.body);
-  User.create(req.body, (error, data) => {
-    console.log(data);
-    if (error) {
-      return next(error)
+  User.findOne({
+    email: req.body.email,
+  }, (error, data) => {
+    if (data) {
+      res.send('email exists');
     } else {
-      res.json(data)
+      User.create(req.body, (error, data) => {
+        if (error) {
+          return next(error)
+        } else {
+          res.json(data)
+        }
+      })
     }
   })
 });
 
 // Check User Login
 userRoute.route('/login').post((req, res) => {
-  console.log(req.body);
   User.findOne({
     email: req.body.email,
     password: req.body.password
@@ -28,15 +34,27 @@ userRoute.route('/login').post((req, res) => {
     if (error) {
       return next(error)
     } else {
-      res.json(data)
+      req.session.loguser = data;
+      sessionData = req.session.loguser;
+      res.json(data);
     }
   })
+})
+
+userRoute.route('/logout').get((req, res) => {
+  req.session.loguser = null;
+  sessionData = req.session.loguser;
+  res.send("successful");
+})
+
+userRoute.route('/isLoggedIn').get((req, res) => {
+  console.log(sessionData);
+  res.send(sessionData ? true : false);
 })
 
 // Get All Users
 userRoute.route('/getAllUsers').get((req, res) => {
   User.find((error, data) => {
-    console.log(data);
     if (error) {
       return next(error)
     } else {
@@ -72,16 +90,14 @@ userRoute.route('/deleteUser/:id').delete((req, res, next) => {
 // Update user
 userRoute.route('/updateUserProfile/:id').put((req, res, next) => {
   User.findByIdAndUpdate(req.params.id, {
-    $set: req.body}, {new: true, upsert: true, useFindAndModify: false}, (error, data) => {
+    $set: req.body
+  }, { new: true, upsert: true, useFindAndModify: false }, (error, data) => {
     if (error) {
       return next(error);
-      console.log(error)
     } else {
-      res.json(data)
-      console.log('User successfully updated!')
+      res.json(data);
     }
   })
 })
-
 
 module.exports = userRoute;
